@@ -7,10 +7,6 @@ data/*
 # Tetap simpan file .gitkeep biar folder kosong ikut
 !data/**/.gitkeep
 
-# Ignore model file besar
-models/*.h5
-models/*.hdf5
-
 # Ignore Jupyter notebook checkpoints
 notebooks/.ipynb_checkpoints/
 
