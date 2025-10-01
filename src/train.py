@@ -30,26 +30,33 @@ val_data = val_gen.flow_from_directory(
     class_mode="binary"
 )
 
-# 2. Model: MobileNetV2 + Head
-base_model = MobileNetV2(weights="imagenet", include_top=False, input_shape=(224, 224, 3))
-base_model.trainable = False  # Tidak fine-tune dulu
+# 2. Base Model: MobileNetV2
+base_model = MobileNetV2(
+    weights="imagenet",
+    include_top=False,
+    input_shape=(224, 224, 3)
+)
 
-model = models.Sequential([
-    base_model,
-    layers.GlobalAveragePooling2D(),
-    layers.Dense(64, activation='relu'),
-    layers.Dropout(0.3),
-    layers.Dense(1, activation='sigmoid')  # Binary output
-])
+# Freeze weights
+base_model.trainable = False
 
-# 3. Compile
-model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+# 3. Bangun model pakai Functional API biar tidak ada multi-input ghost
+inputs = layers.Input(shape=(224, 224, 3))
+x = base_model(inputs, training=False)  # pastikan hanya 1 output
+x = layers.GlobalAveragePooling2D()(x)
+x = layers.Dense(64, activation="relu")(x)
+x = layers.Dropout(0.3)(x)
+outputs = layers.Dense(1, activation="sigmoid")(x)
 
-# 4. Training
+model = models.Model(inputs, outputs)
+
+# 4. Compile
+model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
+
+# 5. Training
 model.fit(train_data, epochs=EPOCHS, validation_data=val_data)
 
-# 5. Save
-if not os.path.exists("models"):
-    os.makedirs("models")
+# 6. Save
+os.makedirs("models", exist_ok=True)
 model.save("models/lidah_model.h5")
 print("✅ Model trained & saved at models/lidah_model.h5")
