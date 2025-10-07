@@ -18,7 +18,7 @@ img_array = img_array / 255.0
 
 # Prediksi
 prediction = model.predict(img_array)
-class_names = ["diabet", "non_diabet"]
+class_names = ["prediabet", "non_diabet"]
 
 # Output
 predicted_class = class_names[int(prediction[0][0] < 0.5)]  # karena sigmoid

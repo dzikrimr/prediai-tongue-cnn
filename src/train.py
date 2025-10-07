@@ -1,8 +1,9 @@
+# train.py
 import os
 import tensorflow as tf
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.applications import MobileNetV2
-from tensorflow.keras import layers, models
+from tensorflow.keras import layers, models, metrics, callbacks
 
 # Konfigurasi dasar
 IMG_SIZE = (224, 224)
@@ -12,7 +13,7 @@ EPOCHS = 10
 train_dir = "data/train"
 val_dir = "data/valid"
 
-# 1. Preprocessing: Rescaling
+# Preprocessing
 train_gen = ImageDataGenerator(rescale=1./255)
 val_gen = ImageDataGenerator(rescale=1./255)
 
@@ -30,19 +31,13 @@ val_data = val_gen.flow_from_directory(
     class_mode="binary"
 )
 
-# 2. Base Model: MobileNetV2
-base_model = MobileNetV2(
-    weights="imagenet",
-    include_top=False,
-    input_shape=(224, 224, 3)
-)
-
-# Freeze weights
+# Base Model
+base_model = MobileNetV2(weights="imagenet", include_top=False, input_shape=(224, 224, 3))
 base_model.trainable = False
 
-# 3. Bangun model pakai Functional API biar tidak ada multi-input ghost
+# Model Functional API
 inputs = layers.Input(shape=(224, 224, 3))
-x = base_model(inputs, training=False)  # pastikan hanya 1 output
+x = base_model(inputs, training=False)
 x = layers.GlobalAveragePooling2D()(x)
 x = layers.Dense(64, activation="relu")(x)
 x = layers.Dropout(0.3)(x)
@@ -50,13 +45,40 @@ outputs = layers.Dense(1, activation="sigmoid")(x)
 
 model = models.Model(inputs, outputs)
 
-# 4. Compile
-model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
+# Compile
+model.compile(
+    optimizer="adam",
+    loss="binary_crossentropy",
+    metrics=[
+        "accuracy",
+        metrics.Precision(name="precision"),
+        metrics.Recall(name="recall")
+    ]
+)
 
-# 5. Training
-model.fit(train_data, epochs=EPOCHS, validation_data=val_data)
-
-# 6. Save
+# Callback: Simpan model terbaik
 os.makedirs("models", exist_ok=True)
+checkpoint = callbacks.ModelCheckpoint(
+    "models/lidah_best_model.h5",
+    save_best_only=True,
+    monitor="val_accuracy",
+    mode="max"
+)
+
+# Training
+history = model.fit(
+    train_data,
+    validation_data=val_data,
+    epochs=EPOCHS,
+    callbacks=[checkpoint]
+)
+
+# Simpan model terakhir
 model.save("models/lidah_model.h5")
-print("✅ Model trained & saved at models/lidah_model.h5")
+print("✅ Training selesai. Model tersimpan di models/lidah_model.h5 dan lidah_best_model.h5")
+
+# Hitung F1-score terakhir dari validation
+precision = history.history["val_precision"][-1]
+recall = history.history["val_recall"][-1]
+f1 = 2 * (precision * recall) / (precision + recall)
+print(f"📊 Validation F1-score terakhir: {f1:.4f}")
