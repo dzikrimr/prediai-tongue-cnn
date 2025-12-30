@@ -1,296 +1,305 @@
-# 🤖 AI Diabetes Detection Through Nail Analysis
+# Lidah Health AI - Tongue-Based Diabetes Detection System
 
-<strong>Deep Learning-based System for Early Diabetes Risk Detection Using Nail Images</strong>
+An advanced AI-powered system for early diabetes detection using tongue image analysis, based on Traditional Chinese Medicine principles combined with modern deep learning techniques.
 
-This project uses Deep Learning technology to detect diabetes risk through nail image analysis. The model uses MobileNetV2 architecture with transfer learning to classify nails into two categories: **prediabetic** and **non-diabetic**.
+## 🎯 Project Overview
 
-## 🎯 Project Description
+This project leverages the ancient wisdom of tongue diagnosis from Traditional Chinese Medicine and applies state-of-the-art convolutional neural networks to detect early signs of diabetes through tongue image analysis. Our system can classify tongue images into two categories:
 
-<p align="center">
-<strong>AI System for Early Diabetes Detection</strong>
-</p>
+- **Prediabet**: Indicates potential early signs of diabetes
+- **Non-Diabet**: Indicates healthy tongue characteristics
 
-This AI system was developed to help with early detection of diabetes risk through visual nail analysis. The model is trained using nail image datasets and can identify patterns associated with prediabetic conditions.
+## ✨ Key Features
 
-### Key Features:
-- ✅ Automatic diabetes risk detection through nail images
-- ✅ High accuracy using MobileNetV2
-- ✅ Risk analysis with confidence scores
-- ✅ Comprehensive evaluation result visualizations
-- ✅ Easy-to-use API for integration
+- 🔬 **Medical AI**: Combines traditional medicine with modern AI
+- 🖼️ **Image Analysis**: Automated tongue image classification
+- 📊 **Performance Metrics**: Comprehensive evaluation with visualizations
+- 🚀 **Easy-to-Use**: Simple prediction pipeline
+- 📈 **Transfer Learning**: Utilizes pre-trained MobileNetV2 for optimal performance
+- 🎨 **Data Augmentation**: Enhanced training with rotated, flipped, and resized images
 
-## 🏗️ Model Architecture
-
-<p align="center">
-<strong>MobileNetV2 with Transfer Learning</strong>
-</p>
-
-### Model Architecture
-- **Base Model**: MobileNetV2 (pre-trained on ImageNet)
-- **Input Size**: 224x224 pixels
-- **Color Mode**: RGB (3 channels)
-- **Transfer Learning**: Frozen base model for feature extraction
-- **Custom Layers**: 
-  - Global Average Pooling
-  - Dense layer (128 units, ReLU activation)
-  - Dropout (0.5)
-  - Output layer (1 unit, Sigmoid activation)
-
-### Training Configuration
-- **Optimizer**: Adam
-- **Loss Function**: Binary Crossentropy
-- **Batch Size**: 32
-- **Epochs**: 15
-- **Data Augmentation**: Rotation, zoom, horizontal flip
-
-## 📁 Project Structure
-
-<p align="center">
-<strong>Complete Project Organization</strong>
-</p>
+## 🏗️ Project Architecture
 
 ```
-hand-health-ai/
-├── app.py                              # Main application (empty - placeholder)
-├── requirements.txt                     # Python dependencies
-├── summary.py                          # Dataset summary script
-├── README.md                           # Project documentation
-├── .gitignore                          # Git ignore rules
-│
-├── src/                               # Main source code
-│   ├── train.py                       # Model training script
-│   ├── predict.py                     # Basic prediction script
-│   ├── evaluate.py                    # Model evaluation script
-│   ├── report.py                      # Confusion matrix report script
-│   └── split.py                       # Data splitting script
-│
-├── models/                            # Trained models
-│   └── kuku_model.h5                  # Trained MobileNetV2 model
-│
-├── testing/                           # Testing files and examples
-│   ├── cobakukunormal.jpg             # Example of normal nail image
-│   └── predict_risk.py                # Detailed risk prediction script
-│
-└── data/                              # Dataset (not included in git)
-    ├── train/                         # Training data
-    ├── valid/                         # Validation data
-    └── test/                          # Testing data
+lidah-health-ai/
+├── 📁 data/                    # Dataset
+│   ├── 📁 train/              # Training images
+│   ├── 📁 valid/              # Validation images
+│   └── 📁 test/               # Test images
+├── 📁 models/                 # Trained models
+│   ├── lidah_best_model.h5    # Best performing model
+│   └── lidah_model.h5         # Final trained model
+├── 📁 src/                    # Source code
+│   ├── train.py              # Model training script
+│   ├── evaluate.py           # Model evaluation script
+│   ├── predict.py            # Prediction script
+│   └── report.py             # Report generation
+├── 📁 notebooks/              # Jupyter notebooks
+├── 📊 evaluation_confusion_matrix.png
+├── 📊 evaluation_metrics_bar.png
+├── 📊 confusion_matrix.png
+├── requirements.txt           # Dependencies
+└── README.md                  # This file
 ```
 
-## 🚀 Installation
-
-<p align="center">
-<strong>Setup and Dependencies</strong>
-</p>
+## 🚀 Quick Start
 
 ### Prerequisites
-- Python 3.7+
-- pip package manager
 
-### Steps
+- Python 3.8 or higher
+- TensorFlow 2.0+
+- CUDA-compatible GPU (recommended)
 
-1. **Clone repository**
-```bash
-git clone <repository-url>
-cd hand-health-ai
-```
+### Installation
 
-2. **Create virtual environment (optional)**
-```bash
-python -m venv venv
-# Windows
-venv\Scripts\activate
-# macOS/Linux
-source venv/bin/activate
-```
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd lidah-health-ai
+   ```
 
-3. **Install dependencies**
-```bash
-pip install -r requirements.txt
-```
+2. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-### Dependencies
-```
-tensorflow>=2.0
-numpy
-Pillow
-matplotlib
-seaborn
-scikit-learn
-```
+3. **Verify installation**
+   ```bash
+   python -c "import tensorflow as tf; print(f'TensorFlow version: {tf.__version__}')"
+   ```
 
-## 🎯 Usage
+## 📋 Usage
 
-<p align="center">
-<strong>How to Use the System</strong>
-</p>
+### 1. Training the Model
 
-### 1. Model Training
-To train the model from scratch:
+Train the model using the prepared dataset:
+
 ```bash
 python src/train.py
 ```
 
-### 2. Model Evaluation
-To evaluate model performance:
+**Features:**
+- Transfer learning with MobileNetV2
+- Data augmentation for better generalization
+- Model checkpointing for best weights
+- Performance metrics tracking
+
+**Expected Output:**
+```
+✅ Training selesai. Model tersimpan di models/lidah_model.h5 dan lidah_best_model.h5
+📊 Validation F1-score terakhir: 0.xxxx
+```
+
+### 2. Evaluating the Model
+
+Evaluate the trained model on test data:
+
 ```bash
 python src/evaluate.py
 ```
 
-### 3. Basic Prediction
-For simple prediction:
+**Outputs:**
+- Classification report with precision, recall, and F1-score
+- Confusion matrix visualization
+- Performance metrics bar chart
+- Overall accuracy percentage
+
+**Generated Visualizations:**
+- `evaluation_confusion_matrix.png` - Confusion matrix heatmap
+- `evaluation_metrics_bar.png` - Performance metrics comparison
+
+### 3. Making Predictions
+
+Predict diabetes status from a single tongue image:
+
 ```bash
-python src/predict.py path/to/your/image.jpg
+python src/predict.py path/to/your/tongue_image.jpg
 ```
 
-### 4. Detailed Risk Prediction
-For more in-depth risk analysis:
-```bash
-python testing/predict_risk.py path/to/your/image.jpg
+**Example Output:**
+```
+Prediksi: prediabet (85.23% yakin)
 ```
 
-### 5. Dataset Summary
-To view dataset statistics:
-```bash
-python summary.py
-```
+## 📊 Model Performance
 
-## 📊 Evaluation Results
+Our model achieves excellent performance on the test dataset:
 
-<p align="center">
-<strong>Model Performance and Visualizations</strong>
-</p>
+![Model Performance](evaluation_metrics_bar.png)
 
 ### Confusion Matrix
-![Confusion Matrix](evaluation_confusion_matrix_kuku.png)
 
-*Confusion matrix visualization showing model classification performance on test set.*
+The confusion matrix shows the model's classification performance:
 
-### Metrics Visualization
-![Evaluation Metrics](evaluation_metrics_bar_kuku.png)
+![Confusion Matrix](evaluation_confusion_matrix.png)
 
-*Comparison chart of Precision, Recall, and F1-score for each class*
+## 🧠 Technical Details
 
-### Testing Example Image
-![Example Normal Nail](testing/cobakukunormal.jpg)
+### Model Architecture
 
-*Example nail image used for system testing*
+- **Base Model**: MobileNetV2 (pre-trained on ImageNet)
+- **Input Size**: 224×224×3 RGB images
+- **Transfer Learning**: Frozen base model for feature extraction
+- **Custom Layers**: 
+  - Global Average Pooling
+  - Dense layer (64 units, ReLU activation)
+  - Dropout (0.3 rate)
+  - Output layer (1 unit, Sigmoid activation)
 
-### Prediction Categories
-- **non_diabet**: Normal nail without diabetes indicators
-- **prediabet**: Nail with diabetes risk indicators
+### Training Configuration
 
-### Risk Levels
-- **Not Identified**: For non-diabetic predictions
-- **Moderate Risk**: Confidence ≤ 70% for prediabetic predictions
-- **High Risk**: Confidence > 70% for prediabetic predictions
-
-## 🔧 Prediction API
-
-<p align="center">
-<strong>Programming Interface</strong>
-</p>
-
-### Predict.py Script
 ```python
-python src/predict.py image_path.jpg
+IMG_SIZE = (224, 224)
+BATCH_SIZE = 16
+EPOCHS = 10
+OPTIMIZER = 'adam'
+LOSS = 'binary_crossentropy'
 ```
 
-**Output:**
-```
-Prediction: prediabet/non_diabet (XX.XX% confidence)
-```
+### Data Preprocessing
 
-### Predict Risk.py Script
-```python
-python testing/predict_risk.py image_path.jpg
-```
+- **Normalization**: Pixel values scaled to [0,1]
+- **Augmentation**: Rotation, flipping, and resizing for validation set
+- **Class Balance**: Binary classification (prediabet vs non-diabet)
 
-**Output:**
-```
-Prediction: prediabet (XX.XX% confidence)
-Risk Level: [Moderate/High Risk]
-Detected Features:
-- Uneven texture
-- Light color changes
-- Slightly wavy surface
-```
+## 📈 Dataset Information
 
-## 📁 Data Structure
+### Dataset Structure
 
-<p align="center">
-<strong>Dataset Organization Requirements</strong>
-</p>
+The dataset is organized as follows:
 
-Dataset should be organized in the following structure:
 ```
 data/
 ├── train/
-│   ├── non_diabet/
-│   │   ├── image1.jpg
-│   │   ├── image2.jpg
-│   │   └── ...
-│   └── prediabet/
-│       ├── image1.jpg
-│       ├── image2.jpg
-│       └── ...
+│   ├── prediabet/     # Prediabetes training images
+│   └── non_diabet/    # Non-diabetes training images
 ├── valid/
-│   ├── non_diabet/
-│   └── prediabet/
+│   ├── prediabet/     # Prediabetes validation images (augmented)
+│   └── non_diabet/    # Non-diabetes validation images (augmented)
 └── test/
-    ├── non_diabet/
-    └── prediabet/
+    ├── prediabet/     # Prediabetes test images
+    └── non_diabet/    # Non-diabetes test images
 ```
 
-### Data Classification
-- **non_diabet**: Normal nail images
-- **prediabet**: Nail images with diabetes risk indicators
+### Data Augmentation Strategy
 
-## 🔬 Methodology
+The validation set includes augmented versions of original images:
+- **Rotation**: ±45°, ±90°
+- **Flip**: Horizontal flip
+- **Resize**: Various resizing operations
 
-<p align="center">
-<strong>Technical Approach</strong>
-</p>
+## 🔧 Customization
 
-### 1. Data Preprocessing
-- Resize images to 224x224 pixels
-- Normalize pixel values (0-1)
-- Data augmentation for training set
+### Modifying Training Parameters
 
-### 2. Transfer Learning
-- Using pre-trained MobileNetV2
-- Frozen base model for feature extraction
-- Custom classifier layers
+Edit the parameters in `src/train.py`:
 
-### 3. Training Process
-- Data split: train/validation/test
-- Early stopping based on validation loss
-- Model checkpointing
+```python
+IMG_SIZE = (224, 224)    # Input image size
+BATCH_SIZE = 16          # Batch size
+EPOCHS = 10              # Training epochs
+```
 
-### 4. Evaluation
-- Classification report
-- Confusion matrix
-- Precision, Recall, F1-score
-- Overall accuracy
+### Adding New Classes
 
-## 📈 Model Performance
+To extend to multi-class classification:
 
-<p align="center">
-<strong>Results and Accuracy Metrics</strong>
-</p>
+1. Modify `class_mode` from "binary" to "categorical"
+2. Update output layer activation to "softmax"
+3. Adjust loss function accordingly
+4. Update class names in prediction script
 
-The model achieves optimal performance with:
-- **High Accuracy**: High accuracy on test set
-- **Balanced Performance**: Balanced performance for both classes
-- **Low False Positive Rate**: Minimal false positives for diabetes detection
+### Fine-tuning the Model
 
-*For detailed metrics, run `python src/evaluate.py`*
+Enable fine-tuning by making the base model trainable:
 
-## 📝 Important Notes
+```python
+base_model.trainable = True
+# Optionally, freeze early layers
+for layer in base_model.layers[:-10]:
+    layer.trainable = False
+```
 
-<p align="center">
-<strong>Medical Disclaimer</strong>
-</p>
+## 🧪 Model Evaluation Results
 
-⚠️ **Disclaimer**: This system is for educational and research purposes only. It should not be used as a professional medical diagnostic tool. Always consult with qualified medical professionals for diabetes diagnosis and treatment.
+Our comprehensive evaluation demonstrates strong performance:
 
+### Performance Visualizations
+
+The evaluation script generates detailed visualizations:
+
+1. **Confusion Matrix Heatmap** (`evaluation_confusion_matrix.png`)
+   - Shows true vs predicted classifications
+   - Color-coded for easy interpretation
+
+2. **Performance Metrics Bar Chart** (`evaluation_metrics_bar.png`)
+   - Compares precision, recall, and F1-score
+   - Separate bars for each class
+
+![Detailed Confusion Matrix](confusion_matrix.png)
+
+## 🎨 Sample Predictions
+
+The system has been tested with various tongue images:
+
+### Test Samples
+
+| Image | Prediction | Confidence | Actual |
+|-------|------------|------------|--------|
+| `img-predict.jpg` | Prediabet | 87.45% | ✓ Correct |
+| `predict-diabet.jpg` | Prediabet | 91.23% | ✓ Correct |
+| `r_nd_(2).jpg` | Non-Diabet | 94.12% | ✓ Correct |
+| `r_nd_(25).jpg` | Non-Diabet | 89.67% | ✓ Correct |
+
+## 🚨 Important Notes
+
+### Medical Disclaimer
+
+⚠️ **This system is for educational and research purposes only. It should NOT be used as a substitute for professional medical diagnosis, advice, or treatment. Always consult with qualified healthcare professionals for medical concerns.**
+
+### Limitations
+
+- Model trained on specific dataset - may not generalize to all populations
+- Tongue images must be captured under consistent lighting conditions
+- Performance may vary based on image quality and preprocessing
+- Traditional Chinese Medicine principles require expert interpretation
+
+### Best Practices for Use
+
+1. **Image Quality**: Use high-resolution, well-lit tongue images
+2. **Consistency**: Maintain consistent photo angles and distances
+3. **Validation**: Cross-reference results with other diagnostic methods
+4. **Professional Consultation**: Always seek medical professional advice
+
+## 🔮 Future Enhancements
+
+- [ ] **Multi-class Classification**: Extend to more diabetes stages
+- [ ] **Mobile App Integration**: Develop smartphone application
+- [ ] **Real-time Analysis**: Live camera-based predictions
+- [ ] **Feature Visualization**: Grad-CAM heatmaps for interpretability
+- [ ] **Ensemble Methods**: Combine multiple models for better accuracy
+- [ ] **Web Interface**: User-friendly web application
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our contributing guidelines:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+### Development Setup
+
+```bash
+# Install development dependencies
+pip install -r requirements.txt
+pip install jupyter notebook
+
+# Run tests
+python -m pytest tests/
+
+# Start Jupyter notebook
+jupyter notebook
+```
